@@ -15,7 +15,7 @@ data("penguins", package="palmerpenguins")
 
 ## Problem 1
 
-The penguins dataset has already been installed and loaded, named penguins.
+The `penguins` dataset has already been installed and loaded, named `penguins`.
 
 ```{r summary}
 summary(penguins)
@@ -29,7 +29,7 @@ ggplot(penguins, aes(x=bill_length_mm, y=flipper_length_mm, color=species)) +
 ggsave("scatterplot.pdf")
 ```
 
-This is a scatterplot of flipper length in mm against bill length in mm, with colors corresponding to the species of penguin. There are 2 observations with NA for bill and flipper lengths, so the warning that these observations were removed have been suppressed in this code chunk.
+This is a scatterplot of flipper length in mm against bill length in mm, with colors corresponding to the species of penguin. There are 2 observations with `NA` for bill and flipper lengths, so the warning that these observations were removed have been suppressed in this code chunk.
 
 ## Problem 2
 
@@ -41,15 +41,30 @@ test_df <- tibble(
   vec_factor=factor(c("easy","medium","hard","medium","medium","easy","hard","hard","easy","medium"))
 )
 
+length(test_df$rsamp)
+length(test_df$vec_char)
+length(test_df$vec_factor)
+levels(test_df$vec_factor)
+```
+
+This code creates a dataframe, called `test_df`, which takes randomly sampled `r length(test_df$rsamp)` values from a standard normal distribution, storing it as `rsamp`, a logical vector of whether the sampled values are greater than 0 called `vec_logical`, a character vector of length `r length(test_df$vec_char)` called `vec_char`, a factor vector of length `r length(test_df$vec_factor)` with `r length(levels(test_df$vec_factor))` levels called `vec_factor`. 
+
+The lengths are confirmed when calling the `length()` function on the vectors and sampled values to confirm they have lengths of 10. Likewise, the factor is confirmed to have 3 levels when calling the `levels()` function. 
+
+```{r means}
 mean(test_df$rsamp) 
 mean(test_df$vec_logical) 
 mean(test_df$vec_char)
 mean(test_df$vec_factor) 
 ```
 
-Taking the means of the random sample and the logical vector works.The random sample is of all numeric values, and the mean of the logical vector works because TRUE is numerically 1 and FALSE is numerically 0, so being a random normally distributed samples, these average out to 0.5.
+Taking the means of the random sample, logical vector, and the factor vector works.
 
-However, the means of the character and factor vectors do not work, as these cannot be internally be coerced to numeric. 
+The random sample is of all numeric values, so the mean of this is easily calculated, equalling `r mean(test_df$rsamp)`. 
+
+The mean of the logical vector works because `TRUE` is numerically 1 and `FALSE` is numerically 0, so being a random normally distributed samples, these average out to around 0.5 depending on each random sample, specifically `r mean(test_df$vec_logical)`. 
+
+However, taking the means of the character vector and of the factor vector does not work, as these are not numeric or logical and cannot be coerced to numbers for calculating the means of these. 
 
 ```{r coercion}
 
@@ -62,4 +77,6 @@ test_df |>
   )
 ```
 
-The output retains the random sampling values, coerces the boolean values to corresponding 1s and 0s, and cannot coerce character or factor values to numeric. NAs are introduced instead, showing why the means cannot be calculated for these variables that cannot be coerced to numeric variable type.
+When converting our dataframe variables to numeric, they all work except for the character vector. 
+
+The output retains the random sampling values, coerces the boolean values to corresponding 1s and 0s, and cannot coerce character values to numeric. `NA`s are introduced instead, showing why the means cannot be calculated for these variables that cannot be coerced to numeric variable type. Since factors naturally have some ordering to the levels, the values are coerced to the numeric counterparts of their levels. 
