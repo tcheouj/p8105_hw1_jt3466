@@ -20,7 +20,21 @@ The `penguins` dataset has already been installed and loaded, named `penguins`.
 ```{r summary}
 summary(penguins)
 ```
-The penguins dataset has `r nrow(penguins)` rows and `r ncol(penguins)`, consisting of data on penguins like species, island, body measurements, sex, and year. The mean flipper length is `r mean(penguins$flipper_length_mm, na.rm=TRUE)`.
+The penguins dataset has `r nrow(penguins)` rows and `r ncol(penguins)` columns, consisting of data on penguins like species, island, body measurements, sex, and year. The variables for `species` and `island` are factors, while `bill_length_mm` and `bill_depth_mm` are doubles, and `flipper_length_mm`, `body_mass_g`, `sex`, and `year` are integers. 
+
+There are 3 different `species`, `r levels(pull(penguins, species))`, and 3 different `islands`, `r levels(pull(penguins, species))`. 
+
+The bill length variable has a min of `r min(pull(penguins, bill_length_mm), na.rm=TRUE)` mm and a max of `r max(pull(penguins, bill_length_mm), na.rm=TRUE)` mm. There are 2 observations with `NA`.
+
+The bill depth variable has a min of `r min(pull(penguins, bill_depth_mm), na.rm=TRUE)` mm and a max of `r max(pull(penguins, bill_depth_mm), na.rm=TRUE)` mm. There are 2 observations with `NA`.
+
+The body mass variable has a min of `r min(pull(penguins, body_mass_g), na.rm=TRUE)` g and a max of `r max(pull(penguins, body_mass_g), na.rm=TRUE)` g. There are 2 observations with `NA`.
+
+There are 165 female observations and 168 male observations, with 11 observations with `NA`. 
+
+The earliest year on record is `r min(pull(penguins, year))` while the latest year on record is `r max(pull(penguins,year))`. The average year is `r format(mean(pull(penguins, year)), digits=2)`.
+
+The mean flipper length is `r mean(pull(penguins,flipper_length_mm), na.rm=TRUE)`.
 
 ```{r scatterplot, warning=FALSE}
 ggplot(penguins, aes(x=bill_length_mm, y=flipper_length_mm, color=species)) + 
@@ -52,17 +66,17 @@ This code creates a dataframe, called `test_df`, which takes randomly sampled `r
 The lengths are confirmed when calling the `length()` function on the vectors and sampled values to confirm they have lengths of 10. Likewise, the factor is confirmed to have 3 levels when calling the `levels()` function. 
 
 ```{r means}
-mean(test_df$rsamp) 
-mean(test_df$vec_logical) 
-mean(test_df$vec_char)
-mean(test_df$vec_factor) 
+mean(pull(test_df, rsamp))
+mean(pull(test_df, vec_logical))
+mean(pull(test_df, vec_char))
+mean(pull(test_df, vec_factor))
 ```
 
 Taking the means of the random sample, logical vector, and the factor vector works.
 
-The random sample is of all numeric values, so the mean of this is easily calculated, equalling `r mean(test_df$rsamp)`. 
+The random sample is of all numeric values, so the mean of this is easily calculated, equalling `r mean(pull(test_df,rsamp))`. 
 
-The mean of the logical vector works because `TRUE` is numerically 1 and `FALSE` is numerically 0, so being a random normally distributed samples, these average out to around 0.5 depending on each random sample, specifically `r mean(test_df$vec_logical)`. 
+The mean of the logical vector works because `TRUE` is numerically 1 and `FALSE` is numerically 0, so being a random normally distributed samples, these average out to around 0.5 depending on each random sample, specifically `r mean(pull(test_df, vec_logical))`. 
 
 However, taking the means of the character vector and of the factor vector does not work, as these are not numeric or logical and cannot be coerced to numbers for calculating the means of these. 
 
