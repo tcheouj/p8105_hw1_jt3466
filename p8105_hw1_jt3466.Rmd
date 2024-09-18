@@ -15,7 +15,7 @@ data("penguins", package="palmerpenguins")
 
 ## Problem 1
 
-The `penguins` dataset has already been installed and loaded, named `penguins`.
+The `penguins` dataset has already been installed and loaded, named `penguins`. The `tidyverse` package has also been installed and loaded. Both the code and output from loading these have been hidden using the `include=FALSE` option.  
 
 ```{r summary}
 summary(penguins)
@@ -55,10 +55,10 @@ test_df <- tibble(
   vec_factor=factor(c("easy","medium","hard","medium","medium","easy","hard","hard","easy","medium"))
 )
 
-length(test_df$rsamp)
-length(test_df$vec_char)
-length(test_df$vec_factor)
-levels(test_df$vec_factor)
+length(pull(test_df,rsamp))
+length(pull(test_df,vec_char))
+length(pull(test_df,vec_factor))
+levels(pull(test_df,vec_factor))
 ```
 
 This code creates a dataframe, called `test_df`, which takes randomly sampled `r length(test_df$rsamp)` values from a standard normal distribution, storing it as `rsamp`, a logical vector of whether the sampled values are greater than 0 called `vec_logical`, a character vector of length `r length(test_df$vec_char)` called `vec_char`, a factor vector of length `r length(test_df$vec_factor)` with `r length(levels(test_df$vec_factor))` levels called `vec_factor`. 
